@@ -5,11 +5,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var dbConnect = require('./db/connect');
+var indexRouter = require('./routes/index');
 
 // database
 dbConnect();
-
-var indexRouter = require('./routes/index');
 
 var app = express();
 
@@ -19,13 +18,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+
 
 app.use('/', indexRouter);
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+  console.log('error is comming');
   next(createError(404));
 });
 
@@ -37,7 +38,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.json({error: res.locals.error});
 });
 
 module.exports = app;
