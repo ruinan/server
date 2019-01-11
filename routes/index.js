@@ -32,7 +32,7 @@ router.get('/records', async (req, res) => {
 });
   
 router.put('/records', jsonParser, async (req, res, next) => {
-    console.log(req.body.path);
+    console.log(req.body);
     var record = new Record({name: 'xxx', path: req.body});
     console.log(record);
     try {
