@@ -33,7 +33,7 @@ router.get('/records', async (req, res) => {
   
 router.put('/records', jsonParser, async (req, res, next) => {
     console.log(req.body);
-    var record = new Record({name: 'xxx', path: req.body});
+    var record = new Record({path: req.body.records});
     console.log(record);
     try {
         const result = await record.save();
