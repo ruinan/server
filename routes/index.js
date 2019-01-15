@@ -12,38 +12,37 @@ router.get('/records/:id', async (req, res) => {
     try {
         const result = await Record.findById(req.params.id);
         console.log(result);
-        res.json({r : result});
-    } catch(error) {
+        res.json({ r: result });
+    } catch (error) {
         // logger && raven
         console.error(error.message);
         throw error;
     }
 });
-  
+
 router.get('/records', async (req, res) => {
     try {
         const result = await Record.find({});
         res.json(result);
-    } catch(error) {
+    } catch (error) {
         // logger && raven
         console.error(error.message);
         throw error;
     }
 });
-  
+
 router.put('/records', jsonParser, async (req, res, next) => {
     console.log(req.body);
-    var record = new Record({path: req.body.records, name: req.body.name});
+    var record = new Record({ path: req.body.records, name: req.body.name });
     console.log(record);
     try {
         const result = await record.save();
         console.log(result);
 
-        await res.json({success: true, id: record.objectId});
-    } catch(error) {
+        await res.json({ success: true, id: record.objectId });
+    } catch (error) {
         throw error;
     }
-    
 });
 
 module.exports = router;
