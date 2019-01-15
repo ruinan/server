@@ -17,14 +17,15 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
 io.on('connection', socket => {
-  console.log('socket is running');
-  socket.emit('record', { hello: 'world' });
-  socket.on('x', function(data) {
-      console.log(data);
-  });
-  socket.on("disconnect", () => console.log("Client disconnected"));
+    let message = '';
+    console.log('socket is running');
+    socket.emit('record', { message, });
+    socket.on('record', (data) => {
+      console.log('on', data);
+        message = data;
+    });
+    socket.on('disconnect', () => console.log('Client disconnected'));
 });
-
 
 app.use(cors());
 app.use(logger('dev'));
@@ -35,7 +36,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(bodyParser.json());
-
 
 app.use('/', indexRouter);
 // catch 404 and forward to error handler
