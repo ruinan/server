@@ -16,15 +16,40 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-io.on('connection', socket => {
-    let message = '';
-    console.log('socket is running');
-    socket.emit('record', { message, });
-    socket.on('record', (data) => {
-      console.log('on', data);
-        message = data;
+// io.on('connection', async socket => {
+//     let message = '';
+//     console.log('socket is running');
+//     socket.emit('record', { message, });
+//     socket.on('record', (data) => {
+//       console.log('on', data);
+//         message = data;
+//     });
+//     socket.on('disconnect', () => console.log('Client disconnected'));
+// });
+
+io.on('connection', function(socket){
+    console.log('a client connected');
+    socket.on('disconnect', function(){
+      console.log('user disconnected');
     });
-    socket.on('disconnect', () => console.log('Client disconnected'));
+    socket.on('record', function(data){
+        console.log(data);
+        // setInterval(() => {
+            socket.emit('message',{data: 'message'}, function(data) {
+                console.log('emit', data);
+            });
+        // }, 1000);
+        
+       
+    });
+    // setInterval(() => {
+    //     socket.emit('message', 'message', function(data) {
+    //         console.log('emit', data);
+    //     });
+    // }, 1000);
+    
+    
+   
 });
 
 app.use(cors());
