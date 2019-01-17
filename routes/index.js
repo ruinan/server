@@ -7,11 +7,11 @@ const jsonParser = bodyParser.json();
 /* GET home page. */
 
 router.get('/records/:id', async (req, res) => {
-    console.log(req.params);
+    // console.log(req.params);
     // res.json({id: req.params.id});
     try {
         const result = await Record.findById(req.params.id);
-        console.log(result);
+        // console.log(result);
         res.json({ r: result });
     } catch (error) {
         // logger && raven
@@ -32,9 +32,9 @@ router.get('/records', async (req, res) => {
 });
 
 router.put('/records', jsonParser, async (req, res, next) => {
-    console.log(req.body);
+    // console.log(req.body);
     var record = new Record({ path: req.body.records, name: req.body.name });
-    console.log(record);
+    // console.log(record);
     try {
         const result = await record.save();
         console.log(result);

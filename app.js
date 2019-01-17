@@ -27,29 +27,15 @@ var io = require('socket.io')(server);
 //     socket.on('disconnect', () => console.log('Client disconnected'));
 // });
 
-io.on('connection', function(socket){
+io.on('connection', function(socket) {
     console.log('a client connected');
-    socket.on('disconnect', function(){
-      console.log('user disconnected');
+    socket.on('disconnect', function() {
+        console.log('user disconnected');
     });
-    socket.on('record', function(data){
+    socket.on('record', function(data) {
         console.log(data);
-        // setInterval(() => {
-            socket.emit('message',{data: 'message'}, function(data) {
-                console.log('emit', data);
-            });
-        // }, 1000);
-        
-       
+        io.emit('record', data);
     });
-    // setInterval(() => {
-    //     socket.emit('message', 'message', function(data) {
-    //         console.log('emit', data);
-    //     });
-    // }, 1000);
-    
-    
-   
 });
 
 app.use(cors());
