@@ -16,24 +16,12 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-// io.on('connection', async socket => {
-//     let message = '';
-//     console.log('socket is running');
-//     socket.emit('record', { message, });
-//     socket.on('record', (data) => {
-//       console.log('on', data);
-//         message = data;
-//     });
-//     socket.on('disconnect', () => console.log('Client disconnected'));
-// });
-
 io.on('connection', function(socket) {
     console.log('a client connected');
     socket.on('disconnect', function() {
         console.log('user disconnected');
     });
     socket.on('record', function(data) {
-        console.log(data);
         io.emit('record', data);
     });
 });
@@ -44,9 +32,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
 
 app.use('/', indexRouter);
 // catch 404 and forward to error handler
