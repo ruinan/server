@@ -1,4 +1,4 @@
-# Ripple - client
+# Ripple - server
 
 ## Enviroment
 | Name | Version |
